@@ -1,11 +1,11 @@
-library(rvest)
-library(XML)
+#library(rvest)
+#library(XML)
 library(dplyr)
 library(stringr)
 library(RSelenium)
 ####################
 remDr <- remoteDriver(remoteServerAddr = 'localhost', 
-                      port = 4445L, # 포트번호 입력 
+                      port = 4445L, # ??트??호 ?韜? 
                       browserName = "chrome") 
 remDr$open() 
 remDr$navigate("http://www.itemmania.com/portal/user/p_login_form.html?returnUrl=http%3A%2F%2Fwww.itemmania.com%2Fmyroom%2F")
@@ -17,20 +17,20 @@ pw <- remDr$findElement(using="xpath", value='//*[@id=\"user_password\"]')
 id$sendKeysToElement(list("")) 
 pw$sendKeysToElement(list("")) 
 
-# 로그인 버튼 클릭 
+# ?慣??? ??튼 클?? 
 login_btn=remDr$findElement(using="xpath",value='//*[@id="login_before"]/div[1]/img')
-login_btn$clickElement()  #로그인 성공 후 마이룸으로
+login_btn$clickElement()  #?慣??? ???? ?? ???肩?으??
 
-#팝니다 원하는 게임, 서버 접속
+#?絳求? ???求? ????, ???? 접??
 game_box <- remDr$findElement(using="xpath", value='//*[@id="searchGameServer"]')
-game_box$sendKeysToElement(list("크레이지아케이드")) 
+game_box$sendKeysToElement(list("크???????????絹?")) 
 game_select=remDr$findElement(using="xpath",value='//*[@id="g_gameServer"]/div[1]/ul/li[2]/span')
 game_select$clickElement()
 server_select=remDr$findElement(using="xpath",value='//*[@id="g_gameServer"]/div[2]/ul/li[3]')
 server_select$clickElement()
 
 
-#팝업창 지우기
+#?鱇?창 ??????
 pop_up2=remDr$findElement(using="xpath",value='//*[@id="listSearchDjb_inptDeny"]')
 pop_up2$clickElement()
 pop_up2=remDr$findElement(using="xpath",value='//*[@id="listSearchDjb"]/div[1]/map/area[1]')
@@ -38,46 +38,46 @@ pop_up2$clickElement()
 
 
 
-#아이템 클릭
-#아이템류 선택 후 아이템 검색
+#?????? 클??
+#?????紡? ???? ?? ?????? ?講?
 server_select=remDr$findElement(using="xpath",value='//*[@id="g_CONTENT"]/div[2]/div[4]')
 server_select$clickElement()
-##아이템명 입력 후 검색
+##?????肪? ?韜? ?? ?講?
 item <- remDr$findElement(using="xpath", value='//*[@id="word"]') 
-item$sendKeysToElement(list("파편")) 
+item$sendKeysToElement(list("????")) 
 item_search=remDr$findElement(using="xpath",value='//*[@id="g_CONTENT"]/div[2]/div[6]/ul/li[2]/span')
 item_search$clickElement()
 
-##50줄 더보기 클릭
+##50?? ?????? 클??
 item_more=remDr$findElement(using="xpath",value='//*[@id="g_CONTENT"]/div[11]')
 item_more$clickElement()
 
-#물품전체 긁어오기
+#??품??체 ?輧??윤?
 html = remDr$getPageSource()[[1]]
 html = read_html(html)
 
 
-#전체에서
+#??체????
 normal=html_nodes(html,'#g_CONTENT > ul.search_list.search_list_normal > li') %>% html_text()
-##제목
+##제??
 { 
 item = gsub(" ",'',normal)
 item = gsub("\t\t\t\t\t.*",'',item)
 item = gsub("\t\t\t\t",'',item)
-item = gsub("팝니다.*",'팝니다',item)
-item = gsub("팜.*",'팜',item)
-item = gsub("팔아요.*",'팔아요',item)
-item = gsub("???|※|▷|●|♥|◆",'',item)
+item = gsub("?絳求?.*",'?絳求?',item)
+item = gsub("??.*",'??',item)
+item = gsub("?횡틸?.*",'?횡틸?',item)
+item = gsub("???|??|??|??|??|??",'',item)
 }
 
 
-##가격
+##????
 {
 price = gsub(" ",'',normal)
 price = gsub(".*\t\t\t\t\t",'',price)
-price = gsub("최소.*",'',price)
-price = gsub("원.*","원",price)
+price = gsub("?玲?.*",'',price)
+price = gsub("??.*","??",price)
 }
 
-#데이터 프레임 생성
+#?????? ?족??? ????
 data = data.frame(item=item,price=price)
