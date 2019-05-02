@@ -93,3 +93,4 @@ data
 
 setwd("D:\\빅데이터\\빅데이터")
 write.csv(data,"data.csv")
+##
