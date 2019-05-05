@@ -1,3 +1,5 @@
+참조 사이트(https://ropensci.org/tutorials/rselenium_tutorial/)
+```r
 library(RSelenium)
 remDr <- remoteDriver(remoteServerAddr = "localhost"
                       , port = 4445L
@@ -64,3 +66,4 @@ webElem <- remDr$findElement(using = "xpath", '//input[@class="gLFyf gsfi"]')
 webElem$sendKeysToElement(list("R Cran"))
 webElem <- remDr$findElement(using = "xpath", '//div[@class="sbl1"]')
 webElem$clickElement()
+```
