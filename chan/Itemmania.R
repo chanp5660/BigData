@@ -9,6 +9,7 @@ Click <- function(xpath){
 }
 InputText <- function(string,xpath,enter=FALSE){
   input <- remDr$findElement(using="xpath", value=xpath)
+  input$clearElement()# 원래 있던 내용 지우기
   if(enter){
     input$sendKeysToElement(list(string,key="enter"))
   }else{
@@ -27,6 +28,8 @@ SiteOpen <- function(site="https://google.co.kr",BS_Open=TRUE){
                           port = 4445L, # 포트번호 입력 
                           browserName = "chrome") 
     remDr$open()
+    remDr$setWindowSize(1200,800) # 윈도우 사이즈 설정 (뒤에 클릭에서 문제가 생김)
+    remDr$setWindowPosition(0,0)
     Sys.sleep(2)
   }
   remDr$navigate(site)
@@ -47,15 +50,39 @@ Exitpopup <- function(){
            finally = NULL)
 }
 
-#-------------- "크레이지 아케이드"(게임) 에서 "파편"(아이템) 검색 ------------#
-Retrival <- function(item){
-  remDr$setWindowSize(1200,800) # 윈도우 사이즈 설정 (뒤에 클릭에서 문제가 생김)
-  remDr$setWindowPosition(0,0)
-  #------------- 게임-서버 선택 -----------#
-  InputText("크레이지아케이드",'//input[@class="g_text"]')
-  Click('//*[@id="g_gameServer"]/div[1]/ul/li[2]/span')#게임명
-  Click('//*[@id="g_gameServer"]/div[2]/ul/li[3]')#서버
+#------------- 게임-서버 선택 -----------#
+GameServer <- function(Gamename,Server){
+  Sys.sleep(1)
+  InputText(Gamename,'//input[@class="g_text"]')
   
+  #게임명 클릭
+  select <- remDr$findElements(using="xpath",'//div[@class="game"]/ul')
+  t = sapply(select,function(x){unlist(x$getElementText())})
+  name_ps=match(Gamename,strsplit(t,"\\n")[[1]])[[1]]
+  if(is.na(name_ps)){
+    print(paste0("'",Gamename,"' 게임명은 없습니다."))
+    return(-1) # 에러 발생 
+  }
+  
+  Click(paste0('//div[@class="game"]/ul/li[',name_ps,']/span'))
+  
+  
+  #서버명 클릭
+  select <- remDr$findElements(using="xpath",'//div[@class="server server_t"]/ul')
+  t = sapply(select,function(x){unlist(x$getElementText())})
+  name_ps=match(Server,strsplit(t,"\\n")[[1]])[[1]]
+  if(is.na(name_ps)){
+    print(paste0("'",Server,"' 서버명은 없습니다."))
+    return(-1) # 에러 발생 
+  }
+  Click(paste0('//div[@class="server server_t"]/ul/li[',name_ps,']'))
+  
+  return(1) #무사히 끝남
+}
+
+#-------------- 아이템 검색 ------------#
+Retrival <- function(item){
+  Sys.sleep(1)
   #---------- 분류(아이템) 선택 후 "파편" 검색 ----------#
   Exitpopup() # 팝업닫기 <- 아이템 클릭이 안됨.
   Click('//div[@value="item"]')
@@ -85,7 +112,7 @@ GetText <-  function(){
   item = sapply(item,function(x){unlist(x$getElementText())})
   
   item = gsub("팝니다.*|팜.*|팔아요.*",'팝니다',item)
-  item = gsub("~|!|' '|★|\\n|◘|█|※|▷|●|♥|◆",'',item)
+  item = gsub("|~|!|' '|★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
   
   ##가격
   price = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="col_03"]/div/span')
@@ -106,14 +133,42 @@ GetText <-  function(){
   return(data)
 }
 
+#------------- 게임명-서버명-아이템명 ---------------#
+Database <- function(Gamename,Server,itemname){
+  # 게임명 만큼 반복
+  g_list = list()
+  e=1 # 에러확인 
+  for(g in 1:length(Gamename)){
+    # 서버명 만큼 반복
+    s_list = list()
+    for(s in 1:length(Server)){
+      e = GameServer(Gamename[g],Server[s])
+      if(e<1){# 에러 발견 
+        print("#--------------------입력오류----------------#")
+        next}
+      # 아이템명 만큼 반복
+      item_list = list()
+      for(i in 1:length(itemname)){
+        try(Retrival(itemname[i]),silent=T)
+        item_list[[i]]=GetText()
+        names(item_list)[length(item_list)]=itemname[i]
+      }
+      s_list[[s]] = item_list
+      names(s_list)[length(s_list)]=Server[s]
+    }
+    g_list[[g]]=s_list
+    names(g_list)[length(g_list)]=Gamename[g]
+  }
+  return(g_list)
+}
+
 ###############################################################
 ###############################################################
 #--------------------------실행-------------------------------#
 remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) # 크롬에서 원하는 사이트 열기
-ItemLogin(ID = "",Password = "") # 아이템매니아 사이트 로그인
-Retrival("파편") # 아이템 파편 검색
-database = GetText()
+ItemLogin(ID = "snrnsk5660",Password = "snrnsk201412090@") # 아이템매니아 사이트 로그인
+item = as.vector(unlist(read.csv("T:/2019-1/bigdataanalysis/team/item.txt",header=F))) # 아이템 정보 
+database = Database("크레이지아케이드",c("happy","ddd"),item[1:2]) # 게임명-서버명-아이템명 데이터화
 
 
-
-
+# 거래 번호에서 날짜 뽑아서 추가
