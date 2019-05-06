@@ -166,7 +166,7 @@ Database <- function(Gamename,Server,itemname){
 ###############################################################
 #--------------------------실행-------------------------------#
 remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) # 크롬에서 원하는 사이트 열기
-ItemLogin(ID = "snrnsk5660",Password = "snrnsk201412090@") # 아이템매니아 사이트 로그인
+ItemLogin(ID = "",Password = "") # 아이템매니아 사이트 로그인
 item = as.vector(unlist(read.csv("T:/2019-1/bigdataanalysis/team/item.txt",header=F))) # 아이템 정보 
 database = Database("크레이지아케이드",c("happy","ddd"),item[1:2]) # 게임명-서버명-아이템명 데이터화
 
