@@ -1,6 +1,7 @@
 #cd C:\Users\1qkrc\Desktop\RSelenium
 #java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.141.59.jar -port 4445
 
+#setwd("T:/2019-1/bigdataanalysis/team")
 
 #--------------- function modify ----------------#
 Click <- function(xpath){
@@ -81,17 +82,22 @@ GameServer <- function(Gamename,Server){
 }
 
 #-------------- 아이템 검색 ------------#
-Retrival <- function(item){
-  Sys.sleep(1)
+Retrival <- function(item=NA){
+  Sys.sleep(2)
   #---------- 분류(아이템) 선택 후 "파편" 검색 ----------#
   Exitpopup() # 팝업닫기 <- 아이템 클릭이 안됨.
-  Click('//div[@value="item"]')
-  InputText(item,'//*[@id="word"]')
-  Click('//ul[@class="search_word"]/li[2]/span')
+  
+  if(!is.na(item)){ # 아무것도 적지 않았을때는 그냥 그 창에서 실행 
+    Sys.sleep(2)
+    Click('//div[@value="item"]')
+    InputText(item,'//*[@id="word"]')
+    Click('//ul[@class="search_word"]/li[2]/span')
+  }
   
   
   #---------- 모든 데이터 보기 ---------------#
-  while(TRUE){
+  n=1
+  while(n<9){
     res <- try({
       Click('//div[@class="load_more"]')
     },silent=TRUE)
@@ -101,6 +107,7 @@ Retrival <- function(item){
       break
     }
     Sys.sleep(2)
+    n=n+1
   }
   
 }
@@ -108,17 +115,19 @@ Retrival <- function(item){
 #------------- 문서 데이터화 --------------#
 GetText <-  function(){
   ##제목
-  item = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="col_02"]/a/div|//div[@class="col_02 active"]/a/div')
+  item = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="col_02"]/a/div|//ul[@class="search_list search_list_normal"]//div[@class="col_02 active"]/a/div')
   item = sapply(item,function(x){unlist(x$getElementText())})
   
   item = gsub("팝니다.*|팜.*|팔아요.*",'팝니다',item)
-  item = gsub("|~|!|' '|★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+  item = gsub("〓|　|▩|◁|◀|■|◈|━|~|!| |★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+  # 추가적으로 <>안에 있는 묶은 제거 특수문자
+  
   
   ##가격
   price = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="col_03"]/div/span')
   price = sapply(price,function(x){unlist(x$getElementText())})
   price = gsub(" |최소",'',price)
-
+  
   ##시간
   time = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="col_05"]')
   time = sapply(time,function(x){unlist(x$getElementText())})
@@ -127,15 +136,19 @@ GetText <-  function(){
   Serial_Num = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="view_detail"]')
   Serial_Num = sapply(Serial_Num,function(x){unlist(x$getElementAttribute("trade-id"))})
   
+  ##날짜
+  Date = substr(Serial_Num,1,8)
+  
   #데이터 프레임 생성
-  data = data.frame("item"=item,"price"=price,"time"=time,"Serial_Num"=Serial_Num)
-
+  data = data.frame("item"=item,"price"=price,"Serial_Num"=Serial_Num,"Date"=Date,"time"=time)
+  
   return(data)
 }
 
 #------------- 게임명-서버명-아이템명 ---------------#
 Database <- function(Gamename,Server,itemname){
   # 게임명 만큼 반복
+  Sys.sleep(1)
   g_list = list()
   e=1 # 에러확인 
   for(g in 1:length(Gamename)){
@@ -165,10 +178,19 @@ Database <- function(Gamename,Server,itemname){
 ###############################################################
 ###############################################################
 #--------------------------실행-------------------------------#
-remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) # 크롬에서 원하는 사이트 열기
-ItemLogin(ID = "",Password = "") # 아이템매니아 사이트 로그인
-item = as.vector(unlist(read.csv("T:/2019-1/bigdataanalysis/team/item.txt",header=F))) # 아이템 정보 
-database = Database("크레이지아케이드",c("happy","ddd"),item[1:2]) # 게임명-서버명-아이템명 데이터화
+### 크롬에서 원하는 사이트 열기
+remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) 
+
+### 아이템매니아 사이트 로그인
+ItemLogin(ID = "",Password = "")
+
+### 아이템 정보 
+item = as.vector(unlist(read.csv("item.txt",header=F)))
+
+### 게임명-서버명-아이템명 데이터화
+database = Database("크레이지아케이드",c("happy","ddd"),item)
+
+### 게임명-서버명-아이템명 데이터화 (첫화면에서 실행해보기.)
+database = Database("로스트아크","루페온",item=NA)
 
 
-# 거래 번호에서 날짜 뽑아서 추가
