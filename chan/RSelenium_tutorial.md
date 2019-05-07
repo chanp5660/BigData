@@ -21,6 +21,8 @@ remDr$refresh() # 새로고침
 
 #------------------ Accessing elements in the DOM(Document Object Model) -------------------------#
 
+remDr$navigate("http://www.google.com") # 구글 열기
+
 # id로 노드 찾기
 webElem <- remDr$findElement(using = 'id', value = "gsr") # id가 gsr인 것
 webElem$getElementAttribute("id") # "gsr"
