@@ -214,7 +214,7 @@ Database <- function(Gamename,Server,itemname){
 remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) 
 
 ### 아이템매니아 사이트 로그인
-ItemLogin(ID = "snrnsk5660",Password = "snrnsk201412090@")
+ItemLogin(ID = "",Password = "")
 
 ### 아이템 정보 
 item = as.vector(unlist(read.csv("C:/Users/korea/Downloads/bigdatadel/item.txt",header=F)))
