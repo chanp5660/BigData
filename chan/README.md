@@ -28,16 +28,21 @@
 ### 판매공고 올리는 방법
 
 1. 게임-서버-물품종류 선택  
+
 ![카테고리](https://user-images.githubusercontent.com/46266247/57274624-c4e27b00-70d6-11e9-8fdb-e1828199c446.JPG)
 
 2. 나머지 사항 작성
+
 ![팝니다](https://user-images.githubusercontent.com/46266247/57274715-096e1680-70d7-11e9-8114-cc8a27db12de.JPG)
 
 (유로 서비스 추가시 **문자효과**, **자동재등록**)
+
 ![유료](https://user-images.githubusercontent.com/46266247/57274796-55b95680-70d7-11e9-96f1-a9628d29263a.JPG)
 
 ### 판매정보
+
 카테고리를 외에도 추가적으로 등록일시, 거래번호
+
 ![판매정보](https://user-images.githubusercontent.com/46266247/57275602-ff99e280-70d9-11e9-89bb-e2619ac41430.JPG)
 
 
