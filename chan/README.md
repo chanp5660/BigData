@@ -166,13 +166,11 @@ GetText <-  function(){
   Serial_Num = remDr$findElements(using="xpath",'//ul[@class="search_list search_list_normal"]//div[@class="view_detail"]')
   Serial_Num = sapply(Serial_Num,function(x){unlist(x$getElementAttribute("trade-id"))})
   
+  ##날짜
+  Date = substr(Serial_Num,1,8)
+  
   #데이터 프레임 생성
-  print(length(item))
-  print(length(price))
-  print(length(time))
-  print(length(Serial_Num))
-  print(item)
-  data = data.frame("item"=item,"price"=price,"time"=time,"Serial_Num"=Serial_Num)
+  data = data.frame("item"=item,"price"=price,"Serial_Num"=Serial_Num,"Date"=Date,"time"=time)
   
   return(data)
 }
