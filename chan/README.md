@@ -12,10 +12,18 @@
 3. 이 데이터를 따라서 게임시세변동을 알 수 있다.
 4. 현재가 최저가인지 최고가인지 판단할 수 있게 된다.
 
-# 판매정보
-1. 판매공고 올리는 방법
-> - 게임-서버 선택  
-> - 
+# 구현방법
+> 판매자,구매자 둘다 우선 해당 아이템의 최저가를 알아야한다.
+
+### 판매공고 올리는 방법
+1. 게임-서버-물품종류 선택  
+![카테고리](https://user-images.githubusercontent.com/46266247/57274624-c4e27b00-70d6-11e9-8fdb-e1828199c446.JPG)
+
+2. 나머지 사항 작성
+![팝니다](https://user-images.githubusercontent.com/46266247/57274715-096e1680-70d7-11e9-8114-cc8a27db12de.JPG)
+
+(유로 서비스 추가시 **문자효과**, **자동재등록**)
+![유료](https://user-images.githubusercontent.com/46266247/57274796-55b95680-70d7-11e9-96f1-a9628d29263a.JPG)
 
 #### [실제 코드와 예제](https://github.com/chanp5660/BigData/blob/master/chan/Rcode_example.md)
 
