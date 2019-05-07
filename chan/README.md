@@ -235,7 +235,7 @@ database = Database("로스트아크","루페온","default")
 
 
 
-#추가할 것
+# 추가할 것
 메이플이라면.
 외부 데이터 특정 게임 사이트 방문 후 아이템 정보 얻기 (http://maple.inven.co.kr/dataninfo/item/) 이용하여 직업마다 아이템 정보를 얻는다.
  
