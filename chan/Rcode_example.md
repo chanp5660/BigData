@@ -1,4 +1,5 @@
-# 실제 코드 [R코드 다운](https://raw.githubusercontent.com/chanp5660/BigData/master/chan/Itemmania.R)
+# 실제 코드 [R코드 다운](https://github.com/chanp5660/chanp5660/files/3150865/Itemmania.txt)
+
 ## 함수구현
 ```r
 #cd C:\Users\1qkrc\Desktop\RSelenium
@@ -180,7 +181,7 @@ Database <- function(Gamename,Server,itemname){
 ```
 ## 예시 실행
 (게임명-서버-아이템명)
-크레이지아케이드-happy-아이템12가지 [item.txt](https://github.com/chanp5660/BigData/blob/master/chan/item.txt)
+크레이지아케이드-happy-아이템12가지 [item.txt](https://github.com/chanp5660/chanp5660/files/3150864/item.txt)
 ```r
 ### 크롬에서 원하는 사이트 열기
 remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) 
