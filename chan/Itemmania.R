@@ -1,7 +1,7 @@
 #cd C:\Users\1qkrc\Desktop\RSelenium
 #java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.141.59.jar -port 4445
 
-#setwd("T:/2019-1/bigdataanalysis/team")
+#setwd("T:/2019-1/bigdataanalysis/team") # 초기위치 설정
 
 #--------------- function modify ----------------#
 Click <- function(xpath){
@@ -176,6 +176,19 @@ Database <- function(Gamename,Server,itemname){
   return(g_list)
 }
 
+#------------- 데이터 저장 ---------------#
+SaveData <- function(Data,Path){
+  # 저장 데이터 Data 
+  # 저장 디렉토리 Path 
+  t = list.files(path=Path, pattern = ".csv")
+  if(length(t)==0){
+    write.csv(Data,paste0(Path,"test1.csv"),row.names = F)
+  }else{
+    t = max(as.numeric(gsub("test|.csv","",t)))+1
+    write.csv(Data,paste0(Path,"test",t,".csv"),row.names = F)
+  }
+}
+
 ###############################################################
 ###############################################################
 #--------------------------실행-------------------------------#
@@ -184,28 +197,28 @@ Itemmania_url = "https://bit.ly/2vGdI16"
 remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE) 
 
 ### 아이템매니아 사이트 로그인
-ID = "snrnsk5660"
-Password = "snrnsk201412090@"
+ID = ""
+Password = ""
 ItemLogin(ID,Password)
 
 ### 아이템 정보 
-item = as.vector(unlist(read.csv("item.txt",header=F)))
+#item = as.vector(unlist(read.csv("item.txt",header=F)))
 
 ### 게임명-서버명-아이템명 데이터화
-Gamename = "크레이지아케이드"
-Severname = "happy"
-itemname = item
-database = Database(Gamename,Servername,itemname)
+# Gamename = "크레이지아케이드"
+# Severname = "happy"
+# itemname = item
+# database = Database(Gamename,Servername,itemname)
+
 
 ### 게임명-서버명-아이템명 데이터화 (첫화면에서 실행해보기.)
-database = Database("로스트아크","루페온",item=NA)
+# database = Database("로스트아크","루페온",item=NA)
 
 ### 스케줄링
-file = "test.csv"
-data2= Database("크레이지아케이드","happy",item=NA)
-write.table(data2,file,sep=",",row.names = FALSE)
-for(i in 1:2){
-  data2= Database("크레이지아케이드","happy",item=NA)
-  write.table(data2,file,sep=",",row.names = FALSE,append = T,col.names = F)
-  Sys.sleep(18000)
-}
+Path = "T:/2019-1/bigdataanalysis/team/result/"
+Data = Database("크레이지아케이드","happy",item=NA)
+SaveData(Data,Path)
+
+
+
+
