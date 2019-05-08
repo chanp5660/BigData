@@ -71,7 +71,12 @@
 
 
 
-# 추가할 것
-메이플이라면.
+# 외부 데이터
+
 외부 데이터 특정 게임 사이트 방문 후 아이템 정보 얻기 (http://maple.inven.co.kr/dataninfo/item/) 이용하여 직업마다 아이템 정보를 얻는다.
+![인벤1](https://user-images.githubusercontent.com/46266247/57365920-f9326600-71c0-11e9-8463-f9a85128e26d.PNG)
+![인벤](https://user-images.githubusercontent.com/46266247/57365798-b96b7e80-71c0-11e9-8ce0-a9239f36ccd6.PNG)
+
+자동알림.
+어플화
  
