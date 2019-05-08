@@ -217,7 +217,7 @@ ItemLogin(ID,Password)
 ### 스케줄링
 Path = "T:/2019-1/bigdataanalysis/team/result/"
 Data = Database("크레이지아케이드","happy",item=NA)
-SaveData(Data,Path)
+SaveData(Data[[1]][[1]][[1]],Path)
 
 
 
