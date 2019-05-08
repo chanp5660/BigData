@@ -2,6 +2,8 @@
 
 > 설치방법 : [파일 다운로드](https://github.com/chanp5660/BigData/blob/master/chan/RSelenium/BeforeSet.zip) -> 같은 폴더에 둔다. -> cmd를 실행 -> 설치파일들이 들어있는 폴더의 디렉토리를 A라 할 때 -> *cd A* -> 작성 후 -> *java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.141.59.jar -port 4445* -> 실행 -> 켜둔 상태에서 진행
 
+![rsel](https://user-images.githubusercontent.com/46266247/57371870-e58dfc00-71ce-11e9-90b3-fc977e19d1db.png)
+
 참조 사이트(https://ropensci.org/tutorials/rselenium_tutorial/)
 
 ```r
