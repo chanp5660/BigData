@@ -9,7 +9,7 @@
 #cd C:\Users\1qkrc\Desktop\RSelenium
 #java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.141.59.jar -port 4445
 
-#setwd("T:/2019-1/bigdataanalysis/team")
+#setwd("T:/2019-1/bigdataanalysis/team") #초기위치 설정
 
 #--------------- function modify ----------------#
 Click <- function(xpath){
@@ -94,10 +94,10 @@ Retrival <- function(item=NA){
   Sys.sleep(2)
   #---------- 분류(아이템) 선택 후 "파편" 검색 ----------#
   Exitpopup() # 팝업닫기 <- 아이템 클릭이 안됨.
-
-  if(!is.na(item)){ # 아무것도 적지 않았을때는 그냥 그 창에서 실행 
-    Sys.sleep(2)
-    Click('//div[@value="item"]')
+  Sys.sleep(2)
+  Click('//div[@value="item"]')
+  
+  if(!is.na(item)){ # 아이템을 적지 않았을때는 그냥 그 창에서 실행 
     InputText(item,'//*[@id="word"]')
     Click('//ul[@class="search_word"]/li[2]/span')
   }
@@ -127,7 +127,8 @@ GetText <-  function(){
   item = sapply(item,function(x){unlist(x$getElementText())})
   
   item = gsub("팝니다.*|팜.*|팔아요.*",'팝니다',item)
-  item = gsub("〓|　|▩|◁|◀|■|◈|━|~|!| |★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+  item = gsub("=|〓|　|▩|◁|◀|■|◈|━|~|!| |★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+
   # 추가적으로 <>안에 있는 묶은 제거 특수문자
   
   
@@ -182,24 +183,43 @@ Database <- function(Gamename,Server,itemname){
   }
   return(g_list)
 }
+
 ```
 ## 예시 실행
 (게임명-서버-아이템명)
 크레이지아케이드-happy-아이템12가지 [item.txt](https://github.com/chanp5660/chanp5660/files/3150864/item.txt)
 ```r
 ### 크롬에서 원하는 사이트 열기
-remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) 
+Itemmania_url = "https://bit.ly/2vGdI16"
+remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE) 
 
 ### 아이템매니아 사이트 로그인
-ItemLogin(ID = "",Password = "")
+ID = ""
+Password = ""
+ItemLogin(ID,Password)
 
 ### 아이템 정보 
 item = as.vector(unlist(read.csv("item.txt",header=F)))
 
 ### 게임명-서버명-아이템명 데이터화
-database = Database("크레이지아케이드",c("happy","ddd"),item)
+Gamename = "크레이지아케이드"
+Severname = "happy"
+itemname = item
+database = Database(Gamename,Servername,itemname)
 
-### 게임명-서버명-아이템명 데이터화 첫화면에서 실행해보기.
+### 게임명-서버명-아이템명 데이터화 (첫화면에서 실행해보기.)
+database = Database("로스트아크","루페온",item=NA)
 
-database = Database("로스트아크","루페온","default")
+### 스케줄링
+file = "test.csv"
+data2= Database("크레이지아케이드","happy",item=NA)
+write.table(data2[[1]][[1]][[1]],file,sep=",",row.names = FALSE)
+for(i in 1:2){
+  data2= Database("크레이지아케이드","happy",item=NA)
+  write.table(data2[[1]][[1]][[1]],file,sep=",",row.names = FALSE,append = T,col.names = F)
+  Sys.sleep(18000)
+}
 ```
+결과 예시 [전체 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv)
+
+![결과](https://user-images.githubusercontent.com/46266247/57372367-66012c80-71d0-11e9-9fbd-8c966f5e1078.png)
