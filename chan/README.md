@@ -34,6 +34,8 @@
 
 # 스케줄링(scheduling)
 
+windows10에 기본 프로그램인 **작업 스케줄러**를 사용해서 매일 반복 시킬 수 있다.
+
 
 #### [실제 코드와 예제](https://github.com/chanp5660/BigData/blob/master/chan/Rcode_example.md)
 
