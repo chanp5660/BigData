@@ -119,7 +119,8 @@ GetText <-  function(){
   item = sapply(item,function(x){unlist(x$getElementText())})
   
   item = gsub("팝니다.*|팜.*|팔아요.*",'팝니다',item)
-  item = gsub("〓|　|▩|◁|◀|■|◈|━|~|!| |★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+  item = gsub("=|〓|　|▩|◁|◀|■|◈|━|~|!| |★|\\n|◘|█|※|▶|▷|●|♥|◆",'',item)
+
   # 추가적으로 <>안에 있는 묶은 제거 특수문자
   
   
@@ -200,11 +201,11 @@ database = Database(Gamename,Servername,itemname)
 database = Database("로스트아크","루페온",item=NA)
 
 ### 스케줄링
-data_all=data.frame()
+data2= Database("크레이지아케이드","happy",item=NA)
+file = "test.csv"
+write.table(data2,file,sep=",",row.names = FALSE)
 for(i in 1:2){
   data2= Database("크레이지아케이드","happy",item=NA)
-  data_all=rbind(data_all,data2[[1]][[1]][[1]])
+  write.table(data2,file,sep=",",row.names = FALSE,append = T,col.names = F)
   Sys.sleep(18000)
 }
-
-write.table(data_all,"test.csv",sep=",",row.names = FALSE)
