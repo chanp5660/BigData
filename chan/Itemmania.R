@@ -86,10 +86,10 @@ Retrival <- function(item=NA){
   Sys.sleep(2)
   #---------- 분류(아이템) 선택 후 "파편" 검색 ----------#
   Exitpopup() # 팝업닫기 <- 아이템 클릭이 안됨.
+  Sys.sleep(2)
+  Click('//div[@value="item"]')
   
-  if(!is.na(item)){ # 아무것도 적지 않았을때는 그냥 그 창에서 실행 
-    Sys.sleep(2)
-    Click('//div[@value="item"]')
+  if(!is.na(item)){ # 아이템을 적지 않았을때는 그냥 그 창에서 실행 
     InputText(item,'//*[@id="word"]')
     Click('//ul[@class="search_word"]/li[2]/span')
   }
@@ -179,18 +179,32 @@ Database <- function(Gamename,Server,itemname){
 ###############################################################
 #--------------------------실행-------------------------------#
 ### 크롬에서 원하는 사이트 열기
-remDr <- SiteOpen("https://bit.ly/2vGdI16",BS_Open=TRUE) 
+Itemmania_url = "https://bit.ly/2vGdI16"
+remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE) 
 
 ### 아이템매니아 사이트 로그인
-ItemLogin(ID = "",Password = "")
+ID = "snrnsk5660"
+Password = "snrnsk201412090@"
+ItemLogin(ID,Password)
 
 ### 아이템 정보 
 item = as.vector(unlist(read.csv("item.txt",header=F)))
 
 ### 게임명-서버명-아이템명 데이터화
-database = Database("크레이지아케이드",c("happy","ddd"),item)
+Gamename = "크레이지아케이드"
+Severname = "happy"
+itemname = item
+database = Database(Gamename,Servername,itemname)
 
 ### 게임명-서버명-아이템명 데이터화 (첫화면에서 실행해보기.)
 database = Database("로스트아크","루페온",item=NA)
 
+### 스케줄링
+data_all=data.frame()
+for(i in 1:2){
+  data2= Database("크레이지아케이드","happy",item=NA)
+  data_all=rbind(data_all,data2[[1]][[1]][[1]])
+  Sys.sleep(18000)
+}
 
+write.table(data_all,"test.csv",sep=",",row.names = FALSE)
