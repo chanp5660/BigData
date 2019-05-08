@@ -228,7 +228,8 @@ database = Database("로스트아크","루페온",item=NA)
 ### 스케줄링
 Path = "T:/2019-1/bigdataanalysis/team/result/"
 Data = Database("크레이지아케이드","happy",item=NA)
-SaveData(Data,Path)
+SaveData(Data[[1]][[1]][[1]],Path)
+
 ```
 결과 예시 [전체 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv)
 
