@@ -4,7 +4,7 @@
 
 ![rsel](https://user-images.githubusercontent.com/46266247/57371870-e58dfc00-71ce-11e9-90b3-fc977e19d1db.png)
 
-참조 사이트(https://ropensci.org/tutorials/rselenium_tutorial/)
+RSelenium 기초 문법 참조 사이트(https://ropensci.org/tutorials/rselenium_tutorial/)
 
 ```r
 library(RSelenium)
