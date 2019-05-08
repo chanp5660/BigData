@@ -201,8 +201,8 @@ database = Database(Gamename,Servername,itemname)
 database = Database("로스트아크","루페온",item=NA)
 
 ### 스케줄링
-data2= Database("크레이지아케이드","happy",item=NA)
 file = "test.csv"
+data2= Database("크레이지아케이드","happy",item=NA)
 write.table(data2,file,sep=",",row.names = FALSE)
 for(i in 1:2){
   data2= Database("크레이지아케이드","happy",item=NA)
