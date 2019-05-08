@@ -32,6 +32,9 @@
 6. 판매정보에서 얻을 수 있는 정보를 찾는다.[밑에 참조](https://bit.ly/2Jn2eru)
 7. **추가적으로 물품제목, 등록일시, 거래번호, 단위금액**을 구할 수 있다.
 
+# 스케줄링(scheduling)
+
+
 #### [실제 코드와 예제](https://github.com/chanp5660/BigData/blob/master/chan/Rcode_example.md)
 
 ### 판매공고 올리는 방법
