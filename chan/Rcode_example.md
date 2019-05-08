@@ -9,7 +9,7 @@
 #cd C:\Users\1qkrc\Desktop\RSelenium
 #java -Dwebdriver.gecko.driver="geckodriver.exe" -jar selenium-server-standalone-3.141.59.jar -port 4445
 
-#setwd("T:/2019-1/bigdataanalysis/team") #초기위치 설정
+#setwd("T:/2019-1/bigdataanalysis/team") # 초기위치 설정
 
 #--------------- function modify ----------------#
 Click <- function(xpath){
@@ -184,6 +184,21 @@ Database <- function(Gamename,Server,itemname){
   return(g_list)
 }
 
+#------------- 데이터 저장 ---------------#
+SaveData <- function(Data,Path){
+  # 저장 데이터 Data 
+  # 저장 디렉토리 Path 
+  t = list.files(path=Path, pattern = ".csv")
+  if(length(t)==0){
+    write.csv(Data,paste0(Path,"test1.csv"),row.names = F)
+  }else{
+    t = max(as.numeric(gsub("test|.csv","",t)))+1
+    write.csv(Data,paste0(Path,"test",t,".csv"),row.names = F)
+  }
+}
+
+
+
 ```
 ## 예시 실행
 (게임명-서버-아이템명)
@@ -211,14 +226,9 @@ database = Database(Gamename,Servername,itemname)
 database = Database("로스트아크","루페온",item=NA)
 
 ### 스케줄링
-file = "test.csv"
-data2= Database("크레이지아케이드","happy",item=NA)
-write.table(data2[[1]][[1]][[1]],file,sep=",",row.names = FALSE)
-for(i in 1:2){
-  data2= Database("크레이지아케이드","happy",item=NA)
-  write.table(data2[[1]][[1]][[1]],file,sep=",",row.names = FALSE,append = T,col.names = F)
-  Sys.sleep(18000)
-}
+Path = "T:/2019-1/bigdataanalysis/team/result/"
+Data = Database("크레이지아케이드","happy",item=NA)
+SaveData(Data,Path)
 ```
 결과 예시 [전체 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv)
 
