@@ -179,7 +179,7 @@ Database <- function(Gamename,Servername,itemname){
     
     #---------- 데이터화해서 게임명-서버명-아이템명 변수 추가 ---------#
     try(
-    {temp = cbind.data.frame("Gamename"=Gamename,"Servername"=Servername,"Itemname"=itemname[i],GetText(),"Data_Save_time"=Sys.time())}
+    {temp = data.frame("Gamename"=Gamename,"Servername"=Servername,"Itemname"=itemname[i],GetText(),"Data_Save_time"=Sys.time())}
     ,silent=T)
     
     #---------- Data_list 행추가 ----------#
@@ -261,6 +261,6 @@ while(TRUE){
 
 
 ```
-결과 예시 [한번 실행 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv) , [4시간씩 5번 결과](https://github.com/meucham11/BigData/blob/master/5hours.csv)
+결과 예시 [한번 실행 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/sample.csv) , [4시간씩 5번 결과](https://github.com/meucham11/BigData/blob/master/5hours.csv)
 
-![결과](https://user-images.githubusercontent.com/46266247/57372367-66012c80-71d0-11e9-9fbd-8c966f5e1078.png)
+![결과](https://user-images.githubusercontent.com/46266247/57449539-26e9de80-7297-11e9-87cf-a8620dab3209.png)
