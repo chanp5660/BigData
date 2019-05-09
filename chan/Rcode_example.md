@@ -231,6 +231,6 @@ Data = Database("크레이지아케이드","happy",item=NA)
 SaveData(Data[[1]][[1]][[1]],Path)
 
 ```
-결과 예시 [전체 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv)
+결과 예시 [한번 실행 결과 보기](https://github.com/chanp5660/BigData/blob/master/chan/test.csv) , [4시간씩 5번 결과](https://github.com/chanp5660/BigData/blob/master/chan/5hours.csv)
 
 ![결과](https://user-images.githubusercontent.com/46266247/57372367-66012c80-71d0-11e9-9fbd-8c966f5e1078.png)
