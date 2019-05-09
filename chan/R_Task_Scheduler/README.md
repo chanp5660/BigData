@@ -9,7 +9,8 @@
 
 1. 자신의 Rscript 디렉토리. 
 2. 실행할 R파일. 
-(준비가 안 되었다면 예시를 보고 따라 하자)[https://github.com/chanp5660/BigData/tree/master/chan/R_Task_Scheduler#rscript-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95]
+
+[준비가 안 되었다면 예시를 보고 따라 하자](https://github.com/chanp5660/BigData/tree/master/chan/R_Task_Scheduler#rscript-%EC%B0%BE%EB%8A%94-%EB%B0%A9%EB%B2%95)
 
 ## 스케줄러 방법
 
