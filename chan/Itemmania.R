@@ -3,6 +3,11 @@
 
 #setwd("T:/2019-1/bigdataanalysis/team") # 초기위치 설정
 
+library(XML)
+library(dplyr)
+library(stringr)
+library(RSelenium)
+
 #--------------- function modify ----------------#
 Click <- function(xpath){
   Select=remDr$findElement(using="xpath",value=xpath)
@@ -11,6 +16,7 @@ Click <- function(xpath){
 InputText <- function(string,xpath,enter=FALSE){
   input <- remDr$findElement(using="xpath", value=xpath)
   input$clearElement()# 원래 있던 내용 지우기
+  Sys.sleep(1)
   if(enter){
     input$sendKeysToElement(list(string,key="enter"))
   }else{
@@ -21,10 +27,6 @@ InputText <- function(string,xpath,enter=FALSE){
 #-------------------- 크롬에서 원하는 사이트 열기 ----------------------#
 SiteOpen <- function(site="https://google.co.kr",BS_Open=TRUE){
   if(BS_Open){ # 브라우저를 키고 사이트를 들어갈껀지 결정
-    library(XML)
-    library(dplyr)
-    library(stringr)
-    library(RSelenium)
     remDr <- remoteDriver(remoteServerAddr = 'localhost', 
                           port = 4445L, # 포트번호 입력 
                           browserName = "chrome") 
@@ -146,34 +148,36 @@ GetText <-  function(){
   return(data)
 }
 
-#------------- 게임명-서버명-아이템명 ---------------#
-Database <- function(Gamename,Server,itemname){
-  # 게임명 만큼 반복
+#------------- 게임명(단일)-서버명(단일)-아이템명(벡터가능) ---------------#
+Database <- function(Gamename,Servername,itemname){
+  
   Sys.sleep(1)
-  g_list = list()
   e=1 # 에러확인 
-  for(g in 1:length(Gamename)){
-    # 서버명 만큼 반복
-    s_list = list()
-    for(s in 1:length(Server)){
-      e = GameServer(Gamename[g],Server[s])
-      if(e<1){# 에러 발견 
-        print("#--------------------입력오류----------------#")
-        next}
-      # 아이템명 만큼 반복
-      item_list = list()
-      for(i in 1:length(itemname)){
-        try(Retrival(itemname[i]),silent=T)
-        item_list[[i]]=GetText()
-        names(item_list)[length(item_list)]=itemname[i]
-      }
-      s_list[[s]] = item_list
-      names(s_list)[length(s_list)]=Server[s]
-    }
-    g_list[[g]]=s_list
-    names(g_list)[length(g_list)]=Gamename[g]
+  Data_list = data.frame() # 데이터저장할 공간
+  
+  #------------ Gamename,Servername 접속 ---------------#
+  e = GameServer(Gamename,Servername)
+  if(e<1){# 에러 발견 
+    print("#--------------------[게임명-서버명] 입력오류----------------#")
+    return(0)
   }
-  return(g_list)
+  
+  #------------- 아이템명 만큼 반복 ----------------#
+  
+  for(i in 1:length(itemname)){
+    
+    #---------- 모든 데이터 보기 --------#
+    try(Retrival(itemname[i]),silent=T)
+    
+    #---------- 데이터화해서 게임명-서버명-아이템명 변수 추가 ---------#
+    try(
+    {temp = cbind.data.frame("Gamename"=Gamename,"Servername"=Servername,"Itemname"=itemname[i],GetText())}
+    ,silent=T)
+    #---------- Data_list 행추가 ----------#
+    Data_list = rbind.data.frame(Data_list,temp)
+  }
+
+  return(Data_list)
 }
 
 #------------- 데이터 저장 ---------------#
@@ -186,39 +190,61 @@ SaveData <- function(Data,Path){
   }else{
     t = max(as.numeric(gsub("test|.csv","",t)))+1
     write.csv(Data,paste0(Path,"test",t,".csv"),row.names = F)
+    print(paste0(paste0(Path,"test",t,".csv")," 파일이 ", Sys.time()," 에 저장 되었습니다."))
   }
 }
 
 ###############################################################
 ###############################################################
 #--------------------------실행-------------------------------#
-### 크롬에서 원하는 사이트 열기
-Itemmania_url = "https://bit.ly/2vGdI16"
-remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE) 
 
-### 아이템매니아 사이트 로그인
+# 아이템매니아 주소 작성.
+Itemmania_url = "https://bit.ly/2vGdI16" 
+# 아이디 비번 작성.
 ID = ""
 Password = ""
-ItemLogin(ID,Password)
+# 저장할 데이터의 상세내용 작성 .
+Path = "T:/2019-1/bigdataanalysis/team/result/"
+Gamename = "크레이지아케이드"
+Servername = "happy"
+Item = NA # 특별히 정하지 않음.
 
+#------------- 스케줄링 -------------#
+while(TRUE){
+  #------- 크롬에서 원하는 사이트 열기 ------#
+  remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE)
+  #------- 아이템매니아 사이트 로그인 ------#
+  ItemLogin(ID,Password)
+  #------- 원하는 데이터 불러오기 ------#
+  Data = Database(Gamename,Servername,item=Item) 
+  #------- 저장하고 끄기 ---------#
+  SaveData(Data,Path) 
+  remDr$close()
+  #------- 6시간 마다 반복 -------#
+  Sys.sleep(3600*6) 
+  if(as.character(Sys.Date())=="2019-05-23"){
+    break
+  }
+  #------ 다시 반복------------#
+  remDr <- SiteOpen(Itemmania_url,BS_Open=TRUE) 
+  ItemLogin(ID,Password)
+}
+
+
+
+
+
+#------------------ 한번씩 실행해보면 도움이 되는 것 ----------------#
 ### 아이템 정보 
 #item = as.vector(unlist(read.csv("item.txt",header=F)))
 
 ### 게임명-서버명-아이템명 데이터화
 # Gamename = "크레이지아케이드"
-# Severname = "happy"
+# Servername = "happy"
 # itemname = item
 # database = Database(Gamename,Servername,itemname)
 
 
 ### 게임명-서버명-아이템명 데이터화 (첫화면에서 실행해보기.)
+# database = Database("크레이지아케이드","happy",item="파편")
 # database = Database("로스트아크","루페온",item=NA)
-
-### 스케줄링
-Path = "T:/2019-1/bigdataanalysis/team/result/"
-Data = Database("크레이지아케이드","happy",item=NA)
-SaveData(Data[[1]][[1]][[1]],Path)
-
-
-
-
