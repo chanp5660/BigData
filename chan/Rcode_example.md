@@ -179,7 +179,7 @@ Database <- function(Gamename,Servername,itemname){
     
     #---------- 데이터화해서 게임명-서버명-아이템명 변수 추가 ---------#
     try(
-    {temp = data.frame("Gamename"=Gamename,"Servername"=Servername,"Itemname"=itemname[i],GetText(),"Data_Save_time"=Sys.time())}
+    {temp = cbind.data.frame("Gamename"=Gamename,"Servername"=Servername,"Itemname"=itemname[i],GetText(),"Data_Save_time"=Sys.time())}
     ,silent=T)
     
     #---------- Data_list 행추가 ----------#
