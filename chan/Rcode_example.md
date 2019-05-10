@@ -1,6 +1,6 @@
 # 실제 코드 
 
-[RSelenium_tutorial](https://github.com/chanp5660/BigData/tree/master/chan/RSelenium)
+[RSelenium_tutorial](https://github.com/chanp5660/Util_chanp5660/tree/master/RSelnium)
 
 [R코드 다운로드](https://github.com/chanp5660/BigData/blob/master/chan/Itemmania.R)
 
