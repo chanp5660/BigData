@@ -33,8 +33,9 @@
 5. 3개의 키워드로 구분하여 데이터를 분류하여 저장.
 6. 판매정보에서 얻을 수 있는 정보를 찾는다.[밑에 참조](https://bit.ly/2Jn2eru)
 7. **추가적으로 물품제목, 등록일시, 거래번호, 단위금액**을 구할 수 있다.
-8. 아이템 목록을 구해서 전체 아이템의 실제 이름과 비교하여 데이터화. [Octoparse 사용한 크롤링](https://github.com/chanp5660/Util_chanp5660/blob/master/Octoparse_tutorial.md)
- [아이템목록.csv](https://github.com/chanp5660/Util_chanp5660/blob/master/ItemList.csv)
+8. 아이템 목록을 구해서 전체 아이템의 실제 이름과 비교하여 데이터화. 
+ - Octoparse 사용한 크롤링 [구현방법](https://github.com/chanp5660/Util_chanp5660/blob/master/Octoparse_tutorial.md)
+ - 아이템목록 [csv](https://github.com/chanp5660/Util_chanp5660/blob/master/ItemList.csv)
 
 # 스케줄링(scheduling)
 
