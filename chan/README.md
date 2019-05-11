@@ -37,7 +37,7 @@
 
 
 # 아이템 목록 
- - Octoparse 사용한 크롤링 [구현방법](https://github.com/chanp5660/Util_chanp5660/blob/master/Octoparse/Octoparse_tutorial.md)
+ - Octoparse 사용한 크롤링 [구현방법](https://github.com/chanp5660/Util_chanp5660/tree/master/Octoparse)
  - 아이템목록 [csv](https://github.com/chanp5660/Util_chanp5660/blob/master/Octoparse/ItemList.csv)
 
 # 스케줄링(scheduling)
