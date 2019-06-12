@@ -223,7 +223,7 @@ windows10에 기본 프로그램인 **작업 스케줄러**를 사용해서 매�
 
 #### 
 
-<iframe width="640" height="360" src="https://www.youtube.com/watch?v=-RY5lnXONX4" frameborder="0" gesture="media" allowfullscreen=""></iframe>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/-RY5lnXONX4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 
 
