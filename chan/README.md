@@ -221,9 +221,26 @@ windows10에 기본 프로그램인 **작업 스케줄러**를 사용해서 매�
 
 ### Expansion
 
-#### 
+#### 유용한 데이터(게임관련)
 
-[![ddd](https://user-images.githubusercontent.com/46266247/58577908-8594ed80-8282-11e9-94bd-a4054e07d427.jpg)](https://www.youtube.com/embed/-RY5lnXONX4)
-[![Little red ridning hood](http://i.imgur.com/7YTMFQp.png)](https://vimeo.com/3514904 "Little red riding hood - Click to Watch!")
+1. 아이템매니아에서 얻을 수 있는 정보 : 게임-서버-아이템-가격(날짜)
+
+  => 아이템 가격의 시세변동
+
+2. 현재 게임이 어떤 방향으로 가고 있는지.!!!!!! 
+
+  => 아이템매니아에서는 판매글 수 증감 등으로 상대적 인기 상황 파악.
+
+  => 피시방 점유율도 현상파악에 도움이 됨.(http://www.gametrics.com/ 유료사이트) - [피시방 점유율 변화](https://www.youtube.com/embed/-RY5lnXONX4)
+
+  => 인벤, 갤러리를 통해서 해당 게임에 대한 긍정적인 글과 부정적인 글을 따로 분류해서 비율을 보고 내용을 보고 판단한다.
+ 
+
+3. 누가 게임으로 밥벌이를 하고 있는가?(거래를 많이 하는 사람 추척)
+
+ - 던전앤파이터 사재기꾼의 사재기 인증 글 
+ - 인벤/카페 등 커뮤니티 사이트에서 쓰는 아이디가 인게임 아이디와 같을 확률이 높기 때문에 아이디 추적
+
+
 
 
