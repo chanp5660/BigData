@@ -211,11 +211,19 @@ windows10에 기본 프로그램인 **작업 스케줄러**를 사용해서 매�
 
 ![그림3](https://user-images.githubusercontent.com/46266247/58577908-8594ed80-8282-11e9-94bd-a4054e07d427.jpg)
 
+##### 아이템매니아 데이터 
+- 각게임마다 아이템의 유형차이가 있다.
+- 유형 : 
+  - 선물식의 가격이 고정된 아이템 가격
+  - 가격이 천차만별인 장비 가격
+  - 아이템 거래가 제한된 게임에서는 계정 가격
 
 
-### 
+### Expansion
 
+#### 
 
+<iframe width="640" height="360" src="https://www.youtube.com/watch?v=-RY5lnXONX4" frameborder="0" gesture="media" allowfullscreen=""></iframe>
 
 
 
